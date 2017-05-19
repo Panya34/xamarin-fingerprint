@@ -28,7 +28,7 @@ namespace Plugin.Fingerprint
             Tuple<bool, NSError> resTuple;
             using (cancellationToken.Register(CancelAuthentication))
             {
-                resTuple = await _context.EvaluatePolicyAsync(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, authRequestConfig.Reason);
+                resTuple = await _context.EvaluatePolicyAsync(LAPolicy.DeviceOwnerAuthentication, authRequestConfig.Reason);
             }
 
             if (resTuple.Item1)
@@ -83,7 +83,7 @@ namespace Plugin.Fingerprint
             if (_context == null)
                 return FingerprintAvailability.NoApi;
 
-            if (_context.CanEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, out error))
+            if (_context.CanEvaluatePolicy(LAPolicy.DeviceOwnerAuthentication, out error))
                 return FingerprintAvailability.Available;
 
             switch ((LAStatus)(int)error.Code)
